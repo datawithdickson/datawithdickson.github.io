@@ -3,9 +3,30 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>datawithdickson | Data Analyst Portfolio</title>
-  <meta name="description" content="Data Analyst portfolio: SQL, Python, Excel and Power BI. Turning raw data into decisions." />
+  <title>Dickson Maketa | Data Analyst Portfolio</title>
+  <meta name="description" content="Explore the data analytics portfolio of Dickson Maketa, featuring PostgreSQL, Python, Excel and Power BI projects in sales analytics and customer churn analysis." />
+  <meta name="author" content="Dickson Maketa" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://datawithdickson.github.io/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Dickson Maketa | Data Analyst Portfolio" />
+  <meta property="og:description" content="Data analytics projects in PostgreSQL, Python, Excel and Power BI." />
+  <meta property="og:url" content="https://datawithdickson.github.io/" />
   <meta name="theme-color" content="#0B0F19" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Dickson Maketa",
+    "url": "https://datawithdickson.github.io/",
+    "jobTitle": "Data Analyst",
+    "sameAs": [
+      "https://github.com/datawithdickson",
+      "https://www.linkedin.com/in/dickson-maketa-61b7003bb"
+    ],
+    "knowsAbout": ["Data Analysis", "PostgreSQL", "Python", "Microsoft Excel", "Power BI"]
+  }
+  </script>
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -119,7 +140,7 @@
     <nav class="mx-auto mt-3 flex max-w-6xl items-center justify-between rounded-2xl px-5 py-3 glass" aria-label="Primary">
       <a href="#home" class="flex items-center gap-2 text-lg font-bold tracking-tight">
         <span class="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-brand to-cyanx text-sm font-extrabold text-white">D</span>
-        <span>datawith<span class="grad-text">dickson</span></span>
+        <span>Dickson <span class="grad-text">Maketa</span></span>
       </a>
 
       <ul class="hidden items-center gap-8 text-sm font-medium md:flex">
@@ -172,7 +193,7 @@
           </p>
 
           <p class="reveal mt-4 max-w-xl text-base leading-relaxed text-gray-400 sm:text-lg" style="--d:220ms">
-            I clean messy data, find the pattern that matters, and tell the story so clearly that the next step is obvious.
+            <strong class="text-white">Dickson Maketa</strong> — I clean messy data, find the pattern that matters, and tell the story so clearly that the next step is obvious.
           </p>
 
           <div class="reveal mt-9 flex flex-wrap gap-4" style="--d:300ms">
@@ -306,16 +327,43 @@
     <!-- ===== PROJECTS ===== -->
     <section id="projects" class="relative px-5 py-24 sm:py-32">
       <div class="mx-auto max-w-6xl">
-        <div class="flex flex-wrap items-end justify-between gap-6">
-          <div>
-            <p class="reveal font-mono text-sm text-cyanx">03 / Projects</p>
-            <h2 class="reveal mt-3 text-3xl font-bold tracking-tight sm:text-5xl" style="--d:60ms">Selected <span class="grad-text">work</span></h2>
-            <p id="projNote" class="reveal mt-4 max-w-xl text-gray-400" style="--d:100ms">Loading repositories from GitHub.</p>
-          </div>
-          <a href="https://github.com/datawithdickson?tab=repositories" target="_blank" rel="noopener noreferrer" class="reveal btn-ghost rounded-xl border border-white/15 px-5 py-2.5 text-sm font-semibold" style="--d:140ms">All repositories</a>
+        <div>
+          <p class="reveal font-mono text-sm text-cyanx">03 / Projects</p>
+          <h2 class="reveal mt-3 text-3xl font-bold tracking-tight sm:text-5xl" style="--d:60ms">Selected <span class="grad-text">work</span></h2>
+          <p class="reveal mt-4 max-w-xl text-gray-400" style="--d:100ms">A selection of end-to-end data analytics projects. Open each project to explore its analysis, dashboard and deliverables.</p>
         </div>
 
-        <div id="projectGrid" class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3" aria-live="polite"></div>
+        <div class="mt-12 grid gap-6 md:grid-cols-2">
+          <article class="reveal group overflow-hidden rounded-2xl glass glass-hover">
+            <a href="retail-sales.html" aria-label="Explore Retail Sales and Customer Analytics project">
+              <div class="relative aspect-[16/9] overflow-hidden">
+                <img src="https://raw.githubusercontent.com/datawithdickson/retail_sales_customer_analytics/main/Power-BI-Sales-Dashboard/Dashboard.png" alt="Retail Sales and Customer Analytics Power BI dashboard preview" loading="lazy" class="proj-img h-full w-full object-cover" />
+                <div class="absolute inset-0 bg-gradient-to-t from-ink/60 to-transparent"></div>
+              </div>
+            </a>
+            <div class="p-6">
+              <p class="font-mono text-xs uppercase tracking-wider text-cyanx">PostgreSQL · Power BI</p>
+              <h3 class="mt-2 text-xl font-semibold">Retail Sales &amp; Customer Analytics</h3>
+              <p class="mt-3 text-sm leading-relaxed text-gray-400">A retail analytics project covering relational database design, data quality checks, SQL cleaning and business analysis, supported by an interactive sales dashboard.</p>
+              <a href="retail-sales.html" class="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-white transition hover:text-cyanx">Explore project <span aria-hidden="true">→</span></a>
+            </div>
+          </article>
+
+          <article class="reveal group overflow-hidden rounded-2xl glass glass-hover" style="--d:100ms">
+            <a href="telecom-churn.html" aria-label="Explore Telecom Customer Churn and Revenue Retention project">
+              <div class="relative aspect-[16/9] overflow-hidden">
+                <img src="https://raw.githubusercontent.com/datawithdickson/telecom-customer-churn-revenue_rentention/main/global-network-connectivity-modern-city-skyline-sunset.jpg" alt="Telecommunications network project cover" loading="lazy" class="proj-img h-full w-full object-cover" />
+                <div class="absolute inset-0 bg-gradient-to-t from-ink/60 to-transparent"></div>
+              </div>
+            </a>
+            <div class="p-6">
+              <p class="font-mono text-xs uppercase tracking-wider text-cyanx">Python · Power BI</p>
+              <h3 class="mt-2 text-xl font-semibold">Telecom Customer Churn &amp; Revenue Retention</h3>
+              <p class="mt-3 text-sm leading-relaxed text-gray-400">An analysis of 7,043 telecom customers to understand churn patterns, recurring revenue exposure and practical customer-retention opportunities.</p>
+              <a href="telecom-churn.html" class="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-white transition hover:text-cyanx">Explore project <span aria-hidden="true">→</span></a>
+            </div>
+          </article>
+        </div>
       </div>
     </section>
 
@@ -369,7 +417,7 @@
   <!-- ===== Footer ===== -->
   <footer class="border-t border-white/5 px-5 py-10">
     <div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 text-sm text-gray-500 sm:flex-row">
-      <p>&copy; <span id="year"></span> datawithdickson. Built with HTML, Tailwind CSS and vanilla JavaScript.</p>
+      <p>&copy; <span id="year"></span> Dickson Maketa. Built with HTML, Tailwind CSS and vanilla JavaScript.</p>
       <a href="#home" class="transition hover:text-white">Back to top</a>
     </div>
   </footer>
@@ -507,99 +555,9 @@
     $('#pySkills').innerHTML = PY_SKILLS.map((s, i) => skillCard(s, i, false)).join('');
     $('#toolSkills').innerHTML = TOOL_SKILLS.map((s, i) => skillCard(s, i, false)).join('');
 
-    /* =========================================================
-       Projects: GitHub API with graceful fallback
-       ========================================================= */
-    const grid = $('#projectGrid'), note = $('#projNote');
-    const PALETTES = [['#6366f1', '#22d3ee'], ['#a855f7', '#6366f1'], ['#22d3ee', '#a855f7'], ['#818cf8', '#34d399'], ['#f472b6', '#6366f1'], ['#38bdf8', '#8b5cf6']];
+    /* Project cards are curated below in the Projects section. */
 
-    /* Generate a unique SVG "chart" cover image from the project name (no external images needed) */
-    function coverImage(name, idx) {
-      let h = 0; for (const c of name) h = (h * 31 + c.charCodeAt(0)) >>> 0;
-      const [c1, c2] = PALETTES[(h + idx) % PALETTES.length];
-      const bars = Array.from({ length: 9 }, (_, i) => 18 + ((h >> (i * 2)) % 62));
-      const barSvg = bars.map((v, i) => `<rect x="${24 + i * 30}" y="${150 - v}" width="18" height="${v}" rx="4" fill="#fff" opacity="${0.15 + (i % 3) * 0.1}"/>`).join('');
-      const pts = bars.map((v, i) => `${33 + i * 30},${140 - v * 1.2}`).join(' ');
-      const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 170"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${c1}"/><stop offset="1" stop-color="${c2}"/></linearGradient></defs><rect width="300" height="170" fill="url(#g)"/><circle cx="260" cy="20" r="60" fill="#fff" opacity=".08"/>${barSvg}<polyline points="${pts}" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity=".85"/></svg>`;
-      return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
-    }
 
-    const prettify = (n) => n.replace(/[-_]+/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
-
-    function projectCard(p, i) {
-      const tags = p.stack.slice(0, 4).map(t => `<span class="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 font-mono text-[11px] text-gray-300">${esc(t)}</span>`).join('');
-      return `
-        <article class="reveal group flex flex-col overflow-hidden rounded-2xl glass glass-hover" style="--d:${(i % 3) * 90}ms">
-          <div class="relative aspect-[300/170] overflow-hidden">
-            <img src="${coverImage(p.name, i)}" alt="Abstract chart cover for ${esc(p.name)}" loading="lazy" class="proj-img h-full w-full object-cover" />
-            <div class="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent"></div>
-          </div>
-          <div class="flex flex-1 flex-col p-6">
-            <h3 class="text-lg font-semibold tracking-tight">${esc(p.title || prettify(p.name))}</h3>
-            <p class="mt-2 flex-1 text-sm leading-relaxed text-gray-400">${esc(p.description || 'No description provided yet. See the repository for details.')}</p>
-            <div class="mt-4 flex flex-wrap gap-2">${tags}</div>
-            <div class="mt-5 flex items-center justify-between border-t border-white/5 pt-4">
-              <a href="${esc(p.url)}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-sm font-semibold text-white transition hover:text-cyanx">
-                View on GitHub
-                <svg class="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-6-6 6 6-6 6"/></svg>
-              </a>
-              ${p.stars ? `<span class="font-mono text-xs text-gray-500">${p.stars} stars</span>` : ''}
-            </div>
-          </div>
-        </article>`;
-    }
-
-    function renderSkeletons() {
-      grid.innerHTML = Array.from({ length: 3 }, () => `
-        <div class="overflow-hidden rounded-2xl glass">
-          <div class="skeleton animate-shimmer aspect-[300/170]"></div>
-          <div class="space-y-3 p-6">
-            <div class="skeleton animate-shimmer h-5 w-2/3 rounded"></div>
-            <div class="skeleton animate-shimmer h-3 w-full rounded"></div>
-            <div class="skeleton animate-shimmer h-3 w-5/6 rounded"></div>
-          </div>
-        </div>`).join('');
-    }
-
-    function renderProjects(list, live) {
-      grid.innerHTML = list.map(projectCard).join('');
-      observeReveals(grid);
-      note.textContent = live
-        ? 'Live from my GitHub account, sorted by most recent activity.'
-        : 'Sample projects shown until public repositories are available. Connect your GitHub to display real work.';
-    }
-
-    async function loadProjects() {
-      renderSkeletons();
-      try {
-        const res = await fetch(`https://api.github.com/users/${GITHUB_USER}/repos?sort=updated&per_page=30`, { headers: { Accept: 'application/vnd.github+json' } });
-        if (!res.ok) throw new Error('GitHub API responded with ' + res.status);
-        const repos = await res.json();
-        $('#statRepos').textContent = repos.length;
-
-        const mine = repos
-          .filter(r => !r.fork && !r.archived)
-          .sort((a, b) => (b.stargazers_count - a.stargazers_count) || (new Date(b.pushed_at) - new Date(a.pushed_at)))
-          .slice(0, 6)
-          .map(r => ({
-            name: r.name,
-            description: r.description,
-            stack: [...new Set([r.language, ...(r.topics || [])].filter(Boolean))].slice(0, 4).length
-              ? [...new Set([r.language, ...(r.topics || [])].filter(Boolean))].slice(0, 4)
-              : ['Data Analysis'],
-            url: r.html_url,
-            stars: r.stargazers_count
-          }));
-
-        if (!mine.length) throw new Error('No public repositories found');
-        renderProjects(mine, true);
-      } catch (err) {
-        console.warn('[portfolio] Falling back to sample projects:', err.message);
-        $('#statRepos').textContent = '0';
-        renderProjects(SAMPLE_PROJECTS, false);
-      }
-    }
-    loadProjects();
 
     /* =========================================================
        Contact form: validates, then opens the visitor's mail client
