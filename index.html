@@ -396,19 +396,25 @@
             </a>
           </div>
 
-          <!-- Contact form (opens the visitor's email client; no backend needed) -->
-          <form id="contactForm" class="reveal rounded-3xl p-6 sm:p-8 glass" style="--d:160ms" novalidate>
-            <div class="grid gap-5">
-              <label class="block text-sm"><span class="mb-2 block text-gray-400">Name</span>
-                <input name="name" required class="w-full rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-white outline-none transition placeholder:text-gray-600 focus:border-brand focus:ring-2 focus:ring-brand/30" placeholder="Your name" /></label>
-              <label class="block text-sm"><span class="mb-2 block text-gray-400">Email</span>
-                <input name="email" type="email" required class="w-full rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-white outline-none transition placeholder:text-gray-600 focus:border-brand focus:ring-2 focus:ring-brand/30" placeholder="you@company.com" /></label>
-              <label class="block text-sm"><span class="mb-2 block text-gray-400">Message</span>
-                <textarea name="message" rows="5" required class="w-full resize-none rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-white outline-none transition placeholder:text-gray-600 focus:border-brand focus:ring-2 focus:ring-brand/30" placeholder="Tell me about the role or project"></textarea></label>
-              <p id="formMsg" class="hidden text-sm text-rose-400" role="alert"></p>
-              <button type="submit" class="btn-primary rounded-xl px-6 py-3.5 text-sm font-semibold text-white">Send message</button>
+          <!-- Data analysis showcase -->
+          <div class="reveal relative overflow-hidden rounded-3xl p-7 sm:p-8 glass" style="--d:160ms">
+            <div class="orb -right-16 -top-20 h-56 w-56 bg-cyanx/20"></div>
+            <div class="relative">
+              <p class="font-mono text-xs uppercase tracking-[0.2em] text-cyanx">From raw data to clear decisions</p>
+              <h3 class="mt-3 text-2xl font-bold tracking-tight text-white sm:text-3xl">Turning numbers into <span class="grad-text">next steps.</span></h3>
+              <p class="mt-4 max-w-lg leading-relaxed text-gray-400">Good analysis goes beyond reporting what happened. It uncovers patterns, explains what matters to the business, and makes the next move easier to see.</p>
+              <div class="mt-8 grid grid-cols-2 gap-3">
+                <div class="rounded-2xl border border-white/10 bg-black/20 p-4"><span class="font-mono text-xs text-cyanx">01 / QUERY</span><p class="mt-2 font-semibold text-white">SQL</p><p class="mt-1 text-xs leading-relaxed text-gray-500">Find the signal in the data.</p></div>
+                <div class="rounded-2xl border border-white/10 bg-black/20 p-4"><span class="font-mono text-xs text-violetx">02 / EXPLORE</span><p class="mt-2 font-semibold text-white">Python</p><p class="mt-1 text-xs leading-relaxed text-gray-500">Clean, investigate and validate.</p></div>
+                <div class="rounded-2xl border border-white/10 bg-black/20 p-4"><span class="font-mono text-xs text-violetx">03 / MODEL</span><p class="mt-2 font-semibold text-white">Excel</p><p class="mt-1 text-xs leading-relaxed text-gray-500">Structure insights and metrics.</p></div>
+                <div class="rounded-2xl border border-white/10 bg-black/20 p-4"><span class="font-mono text-xs text-cyanx">04 / COMMUNICATE</span><p class="mt-2 font-semibold text-white">Power BI</p><p class="mt-1 text-xs leading-relaxed text-gray-500">Make findings easy to act on.</p></div>
+              </div>
+              <div class="mt-7 flex flex-wrap items-center justify-between gap-4 border-t border-white/10 pt-5">
+                <span class="text-sm text-gray-400">Have a question or project in mind?</span>
+                <a href="mailto:makettadickson@gmail.com" class="btn-primary rounded-xl px-5 py-3 text-sm font-semibold text-white">Let's talk <span aria-hidden="true">→</span></a>
+              </div>
             </div>
-          </form>
+          </div>
         </div>
       </div>
     </section>
@@ -558,25 +564,6 @@
     /* Project cards are curated below in the Projects section. */
 
 
-
-    /* =========================================================
-       Contact form: validates, then opens the visitor's mail client
-       ========================================================= */
-    $('#contactForm').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const f = e.target, msg = $('#formMsg');
-      const name = f.name.value.trim(), email = f.email.value.trim(), body = f.message.value.trim();
-      if (!name || !/^\S+@\S+\.\S+$/.test(email) || !body) {
-        msg.textContent = 'Please enter your name, a valid email and a message.';
-        msg.className = 'text-sm text-rose-400';
-        return;
-      }
-      msg.textContent = 'Opening your email app.';
-      msg.className = 'text-sm text-emerald-400';
-      const subject = encodeURIComponent(`Portfolio enquiry from ${name}`);
-      const text = encodeURIComponent(`${body}\n\nFrom: ${name} (${email})`);
-      window.location.href = `mailto:makettadickson@gmail.com?subject=${subject}&body=${text}`;
-    });
 
     /* Kick off reveal animations for static content */
     observeReveals();
