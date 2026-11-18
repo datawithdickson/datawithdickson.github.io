@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>datawithdickson | Data Analyst Portfolio</title>
+  <meta name="description" content="Data Analyst portfolio: SQL, Python, Excel and Power BI. Turning raw data into decisions." />
+  <meta name="theme-color" content="#0B0F19" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS (CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
+          colors: { ink: '#0B0F19', panel: '#111827', brand: '#6366f1', cyanx: '#22d3ee', violetx: '#a855f7' },
+          keyframes: {
+            float: { '0%,100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-14px)' } },
+            blink: { '0%,50%': { opacity: 1 }, '51%,100%': { opacity: 0 } },
+            shimmer: { '0%': { backgroundPosition: '-400px 0' }, '100%': { backgroundPosition: '400px 0' } }
+          },
+          animation: { float: 'float 7s ease-in-out infinite', blink: 'blink 1s step-end infinite', shimmer: 'shimmer 1.6s linear infinite' }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    /* ---------- Base ---------- */
+    html { scroll-padding-top: 80px; }
+    body { background: #0B0F19; color: #e5e7eb; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    ::selection { background: rgba(99,102,241,.45); color: #fff; }
+    ::-webkit-scrollbar { width: 10px; }
+    ::-webkit-scrollbar-track { background: #0B0F19; }
+    ::-webkit-scrollbar-thumb { background: #1f2937; border-radius: 8px; }
+    ::-webkit-scrollbar-thumb:hover { background: #374151; }
+
+    /* ---------- Reusable pieces ---------- */
+    .grad-text { background: linear-gradient(120deg, #818cf8 0%, #a855f7 45%, #22d3ee 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .glass { background: rgba(255,255,255,.035); border: 1px solid rgba(255,255,255,.08); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+    .glass-hover { transition: transform .35s cubic-bezier(.2,.8,.2,1), border-color .35s, box-shadow .35s, background .35s; }
+    .glass-hover:hover { transform: translateY(-6px); border-color: rgba(129,140,248,.45); background: rgba(255,255,255,.055); box-shadow: 0 20px 50px -20px rgba(99,102,241,.55), 0 0 0 1px rgba(99,102,241,.12); }
+
+    .btn-primary { position: relative; overflow: hidden; background: linear-gradient(120deg, #6366f1, #8b5cf6 55%, #22d3ee); box-shadow: 0 10px 30px -10px rgba(99,102,241,.8); transition: transform .25s, box-shadow .25s; }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 40px -10px rgba(139,92,246,.9); }
+    .btn-primary:active { transform: translateY(0) scale(.98); }
+    .btn-primary::after { content: ""; position: absolute; inset: 0; background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,.35) 50%, transparent 70%); transform: translateX(-120%); transition: transform .7s; }
+    .btn-primary:hover::after { transform: translateX(120%); }
+    .btn-ghost { transition: transform .25s, border-color .25s, background .25s; }
+    .btn-ghost:hover { transform: translateY(-2px); border-color: rgba(129,140,248,.6); background: rgba(99,102,241,.1); }
+    .btn-ghost:active { transform: scale(.98); }
+
+    /* Hero background grid */
+    .bg-grid {
+      background-image: linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+      background-size: 56px 56px;
+      -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 30%, transparent 75%);
+      mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 30%, transparent 75%);
+    }
+    .orb { position: absolute; border-radius: 9999px; filter: blur(90px); opacity: .55; pointer-events: none; }
+
+    /* Scroll reveal */
+    .reveal { opacity: 0; transform: translateY(32px); transition: opacity .8s cubic-bezier(.2,.8,.2,1), transform .8s cubic-bezier(.2,.8,.2,1); transition-delay: var(--d, 0ms); }
+    .reveal.in { opacity: 1; transform: none; }
+
+    /* Skill bars */
+    .bar-fill { width: 0; transition: width 1.3s cubic-bezier(.2,.8,.2,1); transition-delay: var(--d, 0ms); }
+    .in .bar-fill, .bar-fill.in { width: var(--w); }
+
+    /* Nav active link */
+    .nav-link { position: relative; color: #9ca3af; transition: color .25s; }
+    .nav-link::after { content: ""; position: absolute; left: 0; bottom: -6px; height: 2px; width: 0; background: linear-gradient(90deg, #6366f1, #22d3ee); transition: width .3s; }
+    .nav-link:hover, .nav-link.active { color: #fff; }
+    .nav-link:hover::after, .nav-link.active::after { width: 100%; }
+
+    /* Skeleton loader for repos */
+    .skeleton { background: linear-gradient(90deg, rgba(255,255,255,.04) 25%, rgba(255,255,255,.1) 50%, rgba(255,255,255,.04) 75%); background-size: 800px 100%; }
+
+    /* Page loader */
+    #loader { transition: opacity .6s, visibility .6s; }
+    #loader.hide { opacity: 0; visibility: hidden; }
+    .ring { width: 56px; height: 56px; border-radius: 9999px; border: 3px solid rgba(255,255,255,.08); border-top-color: #818cf8; border-right-color: #22d3ee; animation: spin 1s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Project card image zoom */
+    .proj-img { transition: transform .7s cubic-bezier(.2,.8,.2,1); }
+    .group:hover .proj-img { transform: scale(1.07); }
+
+    /* Respect reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+      .reveal { opacity: 1; transform: none; }
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+
+<body class="font-sans antialiased">
+
+  <!-- ===== Page loader ===== -->
+  <div id="loader" class="fixed inset-0 z-[100] flex flex-col items-center justify-center gap-5 bg-ink">
+    <div class="ring"></div>
+    <p class="font-mono text-xs tracking-[.3em] text-gray-500 uppercase">Loading insights</p>
+  </div>
+
+  <!-- ===== Scroll progress bar ===== -->
+  <div class="fixed top-0 left-0 z-[90] h-[3px] w-full bg-transparent">
+    <div id="progress" class="h-full w-0 bg-gradient-to-r from-brand via-violetx to-cyanx shadow-[0_0_12px_rgba(99,102,241,.9)]"></div>
+  </div>
+
+  <!-- ===== Navigation ===== -->
+  <header id="nav" class="fixed top-0 inset-x-0 z-50 transition-all duration-300">
+    <nav class="mx-auto mt-3 flex max-w-6xl items-center justify-between rounded-2xl px-5 py-3 glass" aria-label="Primary">
+      <a href="#home" class="flex items-center gap-2 text-lg font-bold tracking-tight">
+        <span class="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-brand to-cyanx text-sm font-extrabold text-white">D</span>
+        <span>datawith<span class="grad-text">dickson</span></span>
+      </a>
+
+      <ul class="hidden items-center gap-8 text-sm font-medium md:flex">
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#skills" class="nav-link">Skills</a></li>
+        <li><a href="#projects" class="nav-link">Projects</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
+
+      <a href="#contact" class="btn-primary hidden rounded-xl px-5 py-2 text-sm font-semibold text-white md:inline-block">Hire me</a>
+
+      <button id="menuBtn" class="grid h-10 w-10 place-items-center rounded-lg border border-white/10 md:hidden" aria-label="Toggle menu" aria-expanded="false">
+        <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </nav>
+
+    <!-- Mobile menu -->
+    <div id="mobileMenu" class="mx-4 mt-2 hidden rounded-2xl p-4 glass md:hidden">
+      <ul class="flex flex-col gap-1 text-sm font-medium">
+        <li><a href="#about" class="block rounded-lg px-3 py-3 hover:bg-white/5">About</a></li>
+        <li><a href="#skills" class="block rounded-lg px-3 py-3 hover:bg-white/5">Skills</a></li>
+        <li><a href="#projects" class="block rounded-lg px-3 py-3 hover:bg-white/5">Projects</a></li>
+        <li><a href="#contact" class="block rounded-lg px-3 py-3 hover:bg-white/5">Contact</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+    <!-- ===== HERO ===== -->
+    <section id="home" class="relative flex min-h-screen items-center overflow-hidden px-5 pt-28 pb-20">
+      <div class="absolute inset-0 bg-grid"></div>
+      <div class="orb -top-20 -left-24 h-96 w-96 bg-brand animate-float"></div>
+      <div class="orb top-1/3 -right-24 h-96 w-96 bg-violetx/70 animate-float" style="animation-delay:-3s"></div>
+      <div class="orb bottom-0 left-1/3 h-72 w-72 bg-cyanx/40 animate-float" style="animation-delay:-5s"></div>
+
+      <div class="relative mx-auto grid w-full max-w-6xl items-center gap-14 lg:grid-cols-[1.15fr_.85fr]">
+        <div>
+          <span class="reveal inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-medium text-gray-300 glass">
+            <span class="relative flex h-2 w-2"><span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span><span class="relative inline-flex h-2 w-2 rounded-full bg-emerald-400"></span></span>
+            Open to junior and entry-level data roles
+          </span>
+
+          <h1 class="reveal mt-6 text-5xl font-extrabold leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl" style="--d:80ms">
+            Data Analyst<br />
+            <span class="grad-text">who turns numbers<br class="hidden sm:block" /> into decisions.</span>
+          </h1>
+
+          <p class="reveal mt-6 h-8 font-mono text-base text-gray-300 sm:text-lg" style="--d:160ms">
+            <span class="text-cyanx">&gt;</span> <span id="typed"></span><span class="animate-blink text-violetx">|</span>
+          </p>
+
+          <p class="reveal mt-4 max-w-xl text-base leading-relaxed text-gray-400 sm:text-lg" style="--d:220ms">
+            I clean messy data, find the pattern that matters, and tell the story so clearly that the next step is obvious.
+          </p>
+
+          <div class="reveal mt-9 flex flex-wrap gap-4" style="--d:300ms">
+            <a href="#projects" class="btn-primary inline-flex items-center gap-2 rounded-xl px-7 py-3.5 text-sm font-semibold text-white">
+              View Projects
+              <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-6-6 6 6-6 6"/></svg>
+            </a>
+            <a href="https://github.com/datawithdickson" target="_blank" rel="noopener noreferrer" class="btn-ghost inline-flex items-center gap-2 rounded-xl border border-white/15 px-7 py-3.5 text-sm font-semibold text-white">
+              <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.9 1.3 1.9 1.3 1.1 1.9 2.9 1.3 3.6 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.7 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .5Z"/></svg>
+              GitHub Profile
+            </a>
+          </div>
+
+          <!-- Quick stats (public repos filled by the API when available) -->
+          <dl class="reveal mt-12 grid max-w-md grid-cols-3 gap-4" style="--d:380ms">
+            <div><dt class="text-xs uppercase tracking-wider text-gray-500">Core tools</dt><dd class="mt-1 text-2xl font-bold">4</dd></div>
+            <div><dt class="text-xs uppercase tracking-wider text-gray-500">Public repos</dt><dd id="statRepos" class="mt-1 text-2xl font-bold">--</dd></div>
+            <div><dt class="text-xs uppercase tracking-wider text-gray-500">Focus</dt><dd class="mt-1 text-2xl font-bold grad-text">Insight</dd></div>
+          </dl>
+        </div>
+
+        <!-- Hero visual: floating dashboard mock -->
+        <div class="reveal relative mx-auto w-full max-w-md" style="--d:200ms" aria-hidden="true">
+          <div class="absolute -inset-4 rounded-[2rem] bg-gradient-to-br from-brand/30 via-violetx/20 to-cyanx/30 blur-2xl"></div>
+          <div class="relative animate-float rounded-3xl p-5 glass">
+            <div class="flex items-center justify-between">
+              <div class="flex gap-1.5"><span class="h-2.5 w-2.5 rounded-full bg-rose-400/80"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-400/80"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400/80"></span></div>
+              <span class="font-mono text-[10px] text-gray-500">insights.sql</span>
+            </div>
+
+            <pre class="mt-4 overflow-hidden rounded-xl bg-black/30 p-4 font-mono text-[11px] leading-relaxed text-gray-300"><span class="text-violetx">SELECT</span> region,
+       <span class="text-cyanx">SUM</span>(revenue) <span class="text-violetx">AS</span> total
+<span class="text-violetx">FROM</span>   sales
+<span class="text-violetx">GROUP BY</span> region
+<span class="text-violetx">ORDER BY</span> total <span class="text-violetx">DESC</span>;</pre>
+
+            <div class="mt-4 grid grid-cols-2 gap-3">
+              <div class="rounded-xl bg-white/5 p-3">
+                <p class="text-[10px] uppercase tracking-wider text-gray-500">Sample metric</p>
+                <p class="mt-1 text-xl font-bold">+24.8%</p>
+                <svg viewBox="0 0 100 30" class="mt-1 h-8 w-full"><defs><linearGradient id="g1" x1="0" x2="1"><stop offset="0" stop-color="#6366f1"/><stop offset="1" stop-color="#22d3ee"/></linearGradient></defs><polyline fill="none" stroke="url(#g1)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="0,24 15,20 30,22 45,13 60,16 75,7 100,3"/></svg>
+              </div>
+              <div class="rounded-xl bg-white/5 p-3">
+                <p class="text-[10px] uppercase tracking-wider text-gray-500">By segment</p>
+                <div class="mt-3 flex h-12 items-end gap-1.5">
+                  <span class="w-full rounded-t bg-brand/80" style="height:45%"></span>
+                  <span class="w-full rounded-t bg-violetx/80" style="height:80%"></span>
+                  <span class="w-full rounded-t bg-cyanx/80" style="height:60%"></span>
+                  <span class="w-full rounded-t bg-brand/80" style="height:95%"></span>
+                  <span class="w-full rounded-t bg-violetx/80" style="height:70%"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <a href="#about" class="absolute bottom-6 left-1/2 hidden -translate-x-1/2 text-gray-500 transition hover:text-white sm:block" aria-label="Scroll to about">
+        <svg class="h-6 w-6 animate-bounce" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6"/></svg>
+      </a>
+    </section>
+
+    <!-- ===== ABOUT ===== -->
+    <section id="about" class="relative px-5 py-24 sm:py-32">
+      <div class="mx-auto max-w-6xl">
+        <p class="reveal font-mono text-sm text-cyanx">01 / About</p>
+        <h2 class="reveal mt-3 text-3xl font-bold tracking-tight sm:text-5xl" style="--d:60ms">Data is only useful when <span class="grad-text">someone acts on it.</span></h2>
+
+        <div class="mt-12 grid gap-8 lg:grid-cols-[1.2fr_.8fr]">
+          <div class="reveal rounded-3xl p-7 sm:p-10 glass" style="--d:100ms">
+            <p class="text-lg leading-relaxed text-gray-300">
+              I am a Data Analyst who works across the full analysis workflow: querying data with SQL, cleaning and exploring it in Python, modelling it in Excel, and presenting it in Power BI dashboards.
+            </p>
+            <p class="mt-5 leading-relaxed text-gray-400">
+              I care most about data storytelling. A correct number that nobody understands changes nothing, so I focus on framing the business question first, being explicit about assumptions, and ending every analysis with a clear recommendation a non-technical stakeholder can act on.
+            </p>
+            <p class="mt-5 leading-relaxed text-gray-400">
+              I treat correlation with caution, flag data quality issues early, and prefer a simple, defensible answer over a complicated one.
+            </p>
+          </div>
+
+          <div class="grid gap-4">
+            <div class="reveal rounded-2xl p-6 glass glass-hover" style="--d:160ms">
+              <div class="mb-3 grid h-10 w-10 place-items-center rounded-xl bg-brand/20 text-brand">
+                <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.3-4.3M10 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16Z"/></svg>
+              </div>
+              <h3 class="font-semibold">Problem solving</h3>
+              <p class="mt-1 text-sm text-gray-400">Start from the business question, then choose the method.</p>
+            </div>
+            <div class="reveal rounded-2xl p-6 glass glass-hover" style="--d:220ms">
+              <div class="mb-3 grid h-10 w-10 place-items-center rounded-xl bg-violetx/20 text-violetx">
+                <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 19V5m0 14h16M8 15v-4m4 4V8m4 7v-6"/></svg>
+              </div>
+              <h3 class="font-semibold">Data storytelling</h3>
+              <p class="mt-1 text-sm text-gray-400">Answer first, evidence second, action items last.</p>
+            </div>
+            <div class="reveal rounded-2xl p-6 glass glass-hover" style="--d:280ms">
+              <div class="mb-3 grid h-10 w-10 place-items-center rounded-xl bg-cyanx/20 text-cyanx">
+                <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m5 13 4 4L19 7"/></svg>
+              </div>
+              <h3 class="font-semibold">Quality first</h3>
+              <p class="mt-1 text-sm text-gray-400">Validate, document assumptions, flag outliers and bias.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SKILLS ===== -->
+    <section id="skills" class="relative px-5 py-24 sm:py-32">
+      <div class="orb right-0 top-1/4 h-80 w-80 bg-brand/40"></div>
+      <div class="relative mx-auto max-w-6xl">
+        <p class="reveal font-mono text-sm text-cyanx">02 / Skills</p>
+        <h2 class="reveal mt-3 text-3xl font-bold tracking-tight sm:text-5xl" style="--d:60ms">The <span class="grad-text">toolkit</span></h2>
+        <p class="reveal mt-4 max-w-xl text-gray-400" style="--d:100ms">Bars show self-assessed working proficiency, not years of experience.</p>
+
+        <!-- Core skills: progress bars (rendered from data in script) -->
+        <h3 class="reveal mt-14 text-sm font-semibold uppercase tracking-[.2em] text-gray-500">Core</h3>
+        <div id="coreSkills" class="mt-5 grid gap-5 sm:grid-cols-2"></div>
+
+        <!-- Python ecosystem -->
+        <h3 class="reveal mt-14 text-sm font-semibold uppercase tracking-[.2em] text-gray-500">Python ecosystem</h3>
+        <div id="pySkills" class="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-3"></div>
+
+        <!-- Practices and tools -->
+        <h3 class="reveal mt-14 text-sm font-semibold uppercase tracking-[.2em] text-gray-500">Practices and tools</h3>
+        <div id="toolSkills" class="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-3"></div>
+      </div>
+    </section>
+
+    <!-- ===== PROJECTS ===== -->
+    <section id="projects" class="relative px-5 py-24 sm:py-32">
+      <div class="mx-auto max-w-6xl">
+        <div class="flex flex-wrap items-end justify-between gap-6">
+          <div>
+            <p class="reveal font-mono text-sm text-cyanx">03 / Projects</p>
+            <h2 class="reveal mt-3 text-3xl font-bold tracking-tight sm:text-5xl" style="--d:60ms">Selected <span class="grad-text">work</span></h2>
+            <p id="projNote" class="reveal mt-4 max-w-xl text-gray-400" style="--d:100ms">Loading repositories from GitHub.</p>
+          </div>
+          <a href="https://github.com/datawithdickson?tab=repositories" target="_blank" rel="noopener noreferrer" class="reveal btn-ghost rounded-xl border border-white/15 px-5 py-2.5 text-sm font-semibold" style="--d:140ms">All repositories</a>
+        </div>
+
+        <div id="projectGrid" class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- ===== CONTACT ===== -->
+    <section id="contact" class="relative px-5 py-24 sm:py-32">
+      <div class="orb left-0 bottom-0 h-80 w-80 bg-violetx/40"></div>
+      <div class="relative mx-auto max-w-6xl">
+        <p class="reveal font-mono text-sm text-cyanx">04 / Contact</p>
+        <h2 class="reveal mt-3 text-3xl font-bold tracking-tight sm:text-5xl" style="--d:60ms">Let us <span class="grad-text">work together</span></h2>
+        <p class="reveal mt-4 max-w-xl text-gray-400" style="--d:100ms">Looking for an analyst who communicates clearly? I would like to hear about your team.</p>
+
+        <div class="mt-12 grid gap-6 lg:grid-cols-2">
+          <!-- Contact links -->
+          <div class="grid gap-4">
+            <a href="mailto:makettadickson@gmail.com" class="reveal group flex items-center gap-4 rounded-2xl p-5 glass glass-hover" style="--d:100ms">
+              <span class="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-brand/20 text-brand"><svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 7l9 6 9-6M5 5h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z"/></svg></span>
+              <span class="min-w-0"><span class="block text-xs uppercase tracking-wider text-gray-500">Email</span><span class="block truncate font-medium">makettadickson@gmail.com</span></span>
+            </a>
+            <a href="https://www.linkedin.com/in/dickson-maketa-61b7003bb" target="_blank" rel="noopener noreferrer" class="reveal group flex items-center gap-4 rounded-2xl p-5 glass glass-hover" style="--d:160ms">
+              <span class="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-cyanx/20 text-cyanx"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9.75h4V21H3V9.75Zm6.5 0h3.8v1.6h.1c.5-1 1.8-1.9 3.7-1.9 4 0 4.7 2.6 4.7 6V21h-4v-4.9c0-1.2 0-2.7-1.7-2.7s-1.9 1.3-1.9 2.6V21h-4V9.75Z"/></svg></span>
+              <span class="min-w-0"><span class="block text-xs uppercase tracking-wider text-gray-500">LinkedIn</span><span class="block truncate font-medium">linkedin.com/in/dickson-maketa-61b7003bb</span></span>
+            </a>
+            <a href="tel:+255755660020" class="reveal group flex items-center gap-4 rounded-2xl p-5 glass glass-hover" style="--d:220ms">
+              <span class="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-violetx/20 text-violetx"><svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 0 1 2-2h2.3a1 1 0 0 1 1 .8l.7 3a1 1 0 0 1-.3 1L7.4 9.3a14 14 0 0 0 7.3 7.3l1.5-1.3a1 1 0 0 1 1-.3l3 .7a1 1 0 0 1 .8 1V19a2 2 0 0 1-2 2A16 16 0 0 1 3 5Z"/></svg></span>
+              <span class="min-w-0"><span class="block text-xs uppercase tracking-wider text-gray-500">Phone</span><span class="block truncate font-medium">+255 755 660 020</span></span>
+            </a>
+            <a href="https://github.com/datawithdickson" target="_blank" rel="noopener noreferrer" class="reveal group flex items-center gap-4 rounded-2xl p-5 glass glass-hover" style="--d:280ms">
+              <span class="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-white/10 text-white"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.9 1.3 1.9 1.3 1.1 1.9 2.9 1.3 3.6 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.7 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .5Z"/></svg></span>
+              <span class="min-w-0"><span class="block text-xs uppercase tracking-wider text-gray-500">GitHub</span><span class="block truncate font-medium">github.com/datawithdickson</span></span>
+            </a>
+          </div>
+
+          <!-- Contact form (opens the visitor's email client; no backend needed) -->
+          <form id="contactForm" class="reveal rounded-3xl p-6 sm:p-8 glass" style="--d:160ms" novalidate>
+            <div class="grid gap-5">
+              <label class="block text-sm"><span class="mb-2 block text-gray-400">Name</span>
+                <input name="name" required class="w-full rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-white outline-none transition placeholder:text-gray-600 focus:border-brand focus:ring-2 focus:ring-brand/30" placeholder="Your name" /></label>
+              <label class="block text-sm"><span class="mb-2 block text-gray-400">Email</span>
+                <input name="email" type="email" required class="w-full rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-white outline-none transition placeholder:text-gray-600 focus:border-brand focus:ring-2 focus:ring-brand/30" placeholder="you@company.com" /></label>
+              <label class="block text-sm"><span class="mb-2 block text-gray-400">Message</span>
+                <textarea name="message" rows="5" required class="w-full resize-none rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-white outline-none transition placeholder:text-gray-600 focus:border-brand focus:ring-2 focus:ring-brand/30" placeholder="Tell me about the role or project"></textarea></label>
+              <p id="formMsg" class="hidden text-sm text-rose-400" role="alert"></p>
+              <button type="submit" class="btn-primary rounded-xl px-6 py-3.5 text-sm font-semibold text-white">Send message</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== Footer ===== -->
+  <footer class="border-t border-white/5 px-5 py-10">
+    <div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 text-sm text-gray-500 sm:flex-row">
+      <p>&copy; <span id="year"></span> datawithdickson. Built with HTML, Tailwind CSS and vanilla JavaScript.</p>
+      <a href="#home" class="transition hover:text-white">Back to top</a>
+    </div>
+  </footer>
+
+  <script>
+    /* =========================================================
+       CONFIG: edit these values to personalise the site
+       ========================================================= */
+    const GITHUB_USER = 'datawithdickson';
+    const TYPING_PHRASES = [
+      'Cleaning messy data into trusted datasets',
+      'Writing SQL that answers real questions',
+      'Building Power BI dashboards people use',
+      'Turning analysis into clear action items'
+    ];
+
+    /* Skill data. "level" is a self-assessed percentage. */
+    const CORE_SKILLS = [
+      { name: 'SQL (PostgreSQL)', level: 92, note: 'Joins, CTEs, window functions, aggregation', color: 'from-brand to-violetx',
+        icon: '<path stroke-linecap="round" stroke-linejoin="round" d="M4 7c0-1.7 3.6-3 8-3s8 1.3 8 3-3.6 3-8 3-8-1.3-8-3Zm0 0v10c0 1.7 3.6 3 8 3s8-1.3 8-3V7M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/>' },
+      { name: 'Python', level: 90, note: 'Analysis, automation, exploratory work', color: 'from-violetx to-cyanx',
+        icon: '<path stroke-linecap="round" stroke-linejoin="round" d="m8 9-4 3 4 3m8-6 4 3-4 3m-2.5-9-3 12"/>' },
+      { name: 'Excel', level: 93, note: 'Pivot tables, lookups, modelling, dashboards', color: 'from-emerald-400 to-cyanx',
+        icon: '<path stroke-linecap="round" stroke-linejoin="round" d="M4 5h16v14H4V5Zm0 5h16M4 14h16M10 5v14"/>' },
+      { name: 'Power BI', level: 90, note: 'DAX basics, data modelling, interactive reports', color: 'from-amber-400 to-violetx',
+        icon: '<path stroke-linecap="round" stroke-linejoin="round" d="M5 20V10m5 10V4m5 16v-7m5 7V8"/>' }
+    ];
+    const PY_SKILLS = [
+      { name: 'Pandas', level: 90, color: 'from-brand to-cyanx', icon: '<path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16M9 4v16M15 4v16"/>' },
+      { name: 'NumPy', level: 87, color: 'from-violetx to-brand', icon: '<path stroke-linecap="round" stroke-linejoin="round" d="M12 3 4 7.5v9L12 21l8-4.5v-9L12 3Zm0 9 8-4.5M12 12 4 7.5M12 12v9"/>' },
+      { name: 'Matplotlib / Seaborn', level: 88, color: 'from-cyanx to-violetx', icon: '<path stroke-linecap="round" stroke-linejoin="round" d="M3 17l5-6 4 3 5-8 4 5"/>' }
+    ];
+    const TOOL_SKILLS = [
+      { name: 'Data Cleaning', level: 92, color: 'from-emerald-400 to-brand', icon: '<path stroke-linecap="round" stroke-linejoin="round" d="m5 19 6-6m0 0 2-8 6 6-8 2Zm-3 3-2 2"/>' },
+      { name: 'Data Visualization', level: 91, color: 'from-brand to-violetx', icon: '<path stroke-linecap="round" stroke-linejoin="round" d="M12 3v9h9a9 9 0 1 1-9-9Z"/>' },
+      { name: 'Git & GitHub', level: 85, color: 'from-violetx to-cyanx', icon: '<path stroke-linecap="round" stroke-linejoin="round" d="M6 3v12m0 0a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm12-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm0 0c0 5-6 3-12 6"/>' }
+    ];
+
+    /* Fallback projects, shown when the GitHub API is unavailable or the account has no public repos */
+    const SAMPLE_PROJECTS = [
+      { name: 'Sales Performance Analysis', description: 'SQL and Power BI analysis of regional sales, identifying top segments and seasonal trends.', stack: ['PostgreSQL', 'Power BI'], url: `https://github.com/${GITHUB_USER}` },
+      { name: 'Customer Churn Exploration', description: 'Exploratory analysis in Python to profile customers who leave and surface early warning signals.', stack: ['Python', 'Pandas', 'Seaborn'], url: `https://github.com/${GITHUB_USER}` },
+      { name: 'Data Cleaning Toolkit', description: 'Reusable Pandas functions for handling missing values, duplicates, outliers and type fixes.', stack: ['Python', 'Pandas', 'NumPy'], url: `https://github.com/${GITHUB_USER}` },
+      { name: 'Excel Financial Dashboard', description: 'Interactive Excel model with pivot tables and slicers for monthly budget tracking.', stack: ['Excel', 'Pivot Tables'], url: `https://github.com/${GITHUB_USER}` },
+      { name: 'Retail Inventory Insights', description: 'Stock turnover and reorder analysis using SQL window functions and summary visuals.', stack: ['PostgreSQL', 'Matplotlib'], url: `https://github.com/${GITHUB_USER}` },
+      { name: 'Survey Results Storytelling', description: 'Survey data cleaned, analysed and translated into a stakeholder-ready summary.', stack: ['Python', 'Excel', 'Power BI'], url: `https://github.com/${GITHUB_USER}` }
+    ];
+
+    /* =========================================================
+       Helpers
+       ========================================================= */
+    const $ = (s, el = document) => el.querySelector(s);
+    const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+    const esc = (str = '') => String(str).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* Scroll-reveal observer, reused for dynamically added content */
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); revealObserver.unobserve(e.target); } });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    const observeReveals = (root = document) => $$('.reveal:not(.in)', root).forEach(el => revealObserver.observe(el));
+
+    /* =========================================================
+       Loader, year, scroll progress, nav behaviour
+       ========================================================= */
+    window.addEventListener('load', () => setTimeout(() => $('#loader').classList.add('hide'), 450));
+    $('#year').textContent = new Date().getFullYear();
+
+    const progress = $('#progress');
+    const sections = $$('main section[id]');
+    const navLinks = $$('.nav-link');
+    function onScroll() {
+      const h = document.documentElement;
+      const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+      progress.style.width = pct + '%';
+      const y = window.scrollY + 140;
+      let current = 'home';
+      sections.forEach(s => { if (y >= s.offsetTop) current = s.id; });
+      navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    /* Mobile menu */
+    const menuBtn = $('#menuBtn'), mobileMenu = $('#mobileMenu');
+    menuBtn.addEventListener('click', () => {
+      const open = mobileMenu.classList.toggle('hidden') === false;
+      menuBtn.setAttribute('aria-expanded', open);
+    });
+    $$('a', mobileMenu).forEach(a => a.addEventListener('click', () => { mobileMenu.classList.add('hidden'); menuBtn.setAttribute('aria-expanded', false); }));
+
+    /* =========================================================
+       Typing effect
+       ========================================================= */
+    (function typing() {
+      const el = $('#typed');
+      if (reduceMotion) { el.textContent = TYPING_PHRASES[0]; return; }
+      let p = 0, i = 0, deleting = false;
+      const tick = () => {
+        const phrase = TYPING_PHRASES[p];
+        el.textContent = phrase.slice(0, i);
+        let delay = deleting ? 28 : 55;
+        if (!deleting && i === phrase.length) { deleting = true; delay = 1600; }
+        else if (deleting && i === 0) { deleting = false; p = (p + 1) % TYPING_PHRASES.length; delay = 400; }
+        i += deleting ? -1 : 1;
+        setTimeout(tick, delay);
+      };
+      tick();
+    })();
+
+    /* =========================================================
+       Skills rendering
+       ========================================================= */
+    const svgIcon = (path) => `<svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true">${path}</svg>`;
+
+    function skillCard(s, i, withNote) {
+      return `
+        <article class="reveal rounded-2xl p-5 glass glass-hover" style="--d:${i * 70}ms">
+          <div class="flex items-center gap-4">
+            <span class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-gradient-to-br ${s.color} text-white shadow-lg">${svgIcon(s.icon)}</span>
+            <div class="min-w-0 flex-1">
+              <div class="flex items-baseline justify-between gap-3">
+                <h4 class="truncate font-semibold">${esc(s.name)}</h4>
+                <span class="font-mono text-xs text-gray-400">${s.level}%</span>
+              </div>
+              ${withNote ? `<p class="mt-0.5 text-xs text-gray-500">${esc(s.note)}</p>` : ''}
+            </div>
+          </div>
+          <div class="mt-4 h-2 overflow-hidden rounded-full bg-white/5" role="progressbar" aria-valuenow="${s.level}" aria-valuemin="0" aria-valuemax="100" aria-label="${esc(s.name)} proficiency">
+            <div class="bar-fill h-full rounded-full bg-gradient-to-r ${s.color} shadow-[0_0_12px_rgba(99,102,241,.6)]" style="--w:${s.level}%; --d:${i * 70 + 250}ms"></div>
+          </div>
+        </article>`;
+    }
+    $('#coreSkills').innerHTML = CORE_SKILLS.map((s, i) => skillCard(s, i, true)).join('');
+    $('#pySkills').innerHTML = PY_SKILLS.map((s, i) => skillCard(s, i, false)).join('');
+    $('#toolSkills').innerHTML = TOOL_SKILLS.map((s, i) => skillCard(s, i, false)).join('');
+
+    /* =========================================================
+       Projects: GitHub API with graceful fallback
+       ========================================================= */
+    const grid = $('#projectGrid'), note = $('#projNote');
+    const PALETTES = [['#6366f1', '#22d3ee'], ['#a855f7', '#6366f1'], ['#22d3ee', '#a855f7'], ['#818cf8', '#34d399'], ['#f472b6', '#6366f1'], ['#38bdf8', '#8b5cf6']];
+
+    /* Generate a unique SVG "chart" cover image from the project name (no external images needed) */
+    function coverImage(name, idx) {
+      let h = 0; for (const c of name) h = (h * 31 + c.charCodeAt(0)) >>> 0;
+      const [c1, c2] = PALETTES[(h + idx) % PALETTES.length];
+      const bars = Array.from({ length: 9 }, (_, i) => 18 + ((h >> (i * 2)) % 62));
+      const barSvg = bars.map((v, i) => `<rect x="${24 + i * 30}" y="${150 - v}" width="18" height="${v}" rx="4" fill="#fff" opacity="${0.15 + (i % 3) * 0.1}"/>`).join('');
+      const pts = bars.map((v, i) => `${33 + i * 30},${140 - v * 1.2}`).join(' ');
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 170"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${c1}"/><stop offset="1" stop-color="${c2}"/></linearGradient></defs><rect width="300" height="170" fill="url(#g)"/><circle cx="260" cy="20" r="60" fill="#fff" opacity=".08"/>${barSvg}<polyline points="${pts}" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity=".85"/></svg>`;
+      return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+    }
+
+    const prettify = (n) => n.replace(/[-_]+/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+
+    function projectCard(p, i) {
+      const tags = p.stack.slice(0, 4).map(t => `<span class="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 font-mono text-[11px] text-gray-300">${esc(t)}</span>`).join('');
+      return `
+        <article class="reveal group flex flex-col overflow-hidden rounded-2xl glass glass-hover" style="--d:${(i % 3) * 90}ms">
+          <div class="relative aspect-[300/170] overflow-hidden">
+            <img src="${coverImage(p.name, i)}" alt="Abstract chart cover for ${esc(p.name)}" loading="lazy" class="proj-img h-full w-full object-cover" />
+            <div class="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent"></div>
+          </div>
+          <div class="flex flex-1 flex-col p-6">
+            <h3 class="text-lg font-semibold tracking-tight">${esc(p.title || prettify(p.name))}</h3>
+            <p class="mt-2 flex-1 text-sm leading-relaxed text-gray-400">${esc(p.description || 'No description provided yet. See the repository for details.')}</p>
+            <div class="mt-4 flex flex-wrap gap-2">${tags}</div>
+            <div class="mt-5 flex items-center justify-between border-t border-white/5 pt-4">
+              <a href="${esc(p.url)}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-sm font-semibold text-white transition hover:text-cyanx">
+                View on GitHub
+                <svg class="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-6-6 6 6-6 6"/></svg>
+              </a>
+              ${p.stars ? `<span class="font-mono text-xs text-gray-500">${p.stars} stars</span>` : ''}
+            </div>
+          </div>
+        </article>`;
+    }
+
+    function renderSkeletons() {
+      grid.innerHTML = Array.from({ length: 3 }, () => `
+        <div class="overflow-hidden rounded-2xl glass">
+          <div class="skeleton animate-shimmer aspect-[300/170]"></div>
+          <div class="space-y-3 p-6">
+            <div class="skeleton animate-shimmer h-5 w-2/3 rounded"></div>
+            <div class="skeleton animate-shimmer h-3 w-full rounded"></div>
+            <div class="skeleton animate-shimmer h-3 w-5/6 rounded"></div>
+          </div>
+        </div>`).join('');
+    }
+
+    function renderProjects(list, live) {
+      grid.innerHTML = list.map(projectCard).join('');
+      observeReveals(grid);
+      note.textContent = live
+        ? 'Live from my GitHub account, sorted by most recent activity.'
+        : 'Sample projects shown until public repositories are available. Connect your GitHub to display real work.';
+    }
+
+    async function loadProjects() {
+      renderSkeletons();
+      try {
+        const res = await fetch(`https://api.github.com/users/${GITHUB_USER}/repos?sort=updated&per_page=30`, { headers: { Accept: 'application/vnd.github+json' } });
+        if (!res.ok) throw new Error('GitHub API responded with ' + res.status);
+        const repos = await res.json();
+        $('#statRepos').textContent = repos.length;
+
+        const mine = repos
+          .filter(r => !r.fork && !r.archived)
+          .sort((a, b) => (b.stargazers_count - a.stargazers_count) || (new Date(b.pushed_at) - new Date(a.pushed_at)))
+          .slice(0, 6)
+          .map(r => ({
+            name: r.name,
+            description: r.description,
+            stack: [...new Set([r.language, ...(r.topics || [])].filter(Boolean))].slice(0, 4).length
+              ? [...new Set([r.language, ...(r.topics || [])].filter(Boolean))].slice(0, 4)
+              : ['Data Analysis'],
+            url: r.html_url,
+            stars: r.stargazers_count
+          }));
+
+        if (!mine.length) throw new Error('No public repositories found');
+        renderProjects(mine, true);
+      } catch (err) {
+        console.warn('[portfolio] Falling back to sample projects:', err.message);
+        $('#statRepos').textContent = '0';
+        renderProjects(SAMPLE_PROJECTS, false);
+      }
+    }
+    loadProjects();
+
+    /* =========================================================
+       Contact form: validates, then opens the visitor's mail client
+       ========================================================= */
+    $('#contactForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const f = e.target, msg = $('#formMsg');
+      const name = f.name.value.trim(), email = f.email.value.trim(), body = f.message.value.trim();
+      if (!name || !/^\S+@\S+\.\S+$/.test(email) || !body) {
+        msg.textContent = 'Please enter your name, a valid email and a message.';
+        msg.className = 'text-sm text-rose-400';
+        return;
+      }
+      msg.textContent = 'Opening your email app.';
+      msg.className = 'text-sm text-emerald-400';
+      const subject = encodeURIComponent(`Portfolio enquiry from ${name}`);
+      const text = encodeURIComponent(`${body}\n\nFrom: ${name} (${email})`);
+      window.location.href = `mailto:makettadickson@gmail.com?subject=${subject}&body=${text}`;
+    });
+
+    /* Kick off reveal animations for static content */
+    observeReveals();
+  </script>
+</body>
+</html>
